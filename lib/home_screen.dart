@@ -25,8 +25,23 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: (){}, child: const Text("Create Room", style: TextStyle(color : Colors.black),  )),
-            ElevatedButton(onPressed: (){}, child:const  Text("Join Room", style: TextStyle(color : Colors.black),  )),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(Colors.blue),
+                textStyle: WidgetStateProperty.all(TextStyle(color: Colors.white)),
+                minimumSize: WidgetStateProperty.all(Size(MediaQuery.of(context).size.width/2.5, 50)),
+              ),
+
+              onPressed: (){}, child: const Text("Create", style: TextStyle(color: Colors.white, fontSize: 16),  )),
+            SizedBox(width: MediaQuery.of(context).size.width/25.5,),
+            ElevatedButton(
+               style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(Colors.white70),
+                textStyle: WidgetStateProperty.all(TextStyle(color: Colors.blue)),
+                minimumSize: WidgetStateProperty.all(Size(MediaQuery.of(context).size.width/2.5, 50)),
+              
+              ),
+              onPressed: (){}, child:const  Text("Join", style: TextStyle(color: Colors.blue, fontSize: 16),  )),
           ],
         )
       ],
