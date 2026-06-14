@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:who_inherited_who/create_room_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,7 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 minimumSize: WidgetStateProperty.all(Size(MediaQuery.of(context).size.width/2.5, 50)),
               ),
 
-              onPressed: (){}, child: const Text("Create", style: TextStyle(color: Colors.white, fontSize: 16),  )),
+              onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CreateRoomScreen())), 
+              child: const Text("Create", style: TextStyle(color: Colors.white, fontSize: 16),  )),
             SizedBox(width: MediaQuery.of(context).size.width/25.5,),
             ElevatedButton(
                style: ButtonStyle(
