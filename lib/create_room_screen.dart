@@ -39,7 +39,7 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
         SizedBox(height: 20,),
         DropdownButton<String>(
          
-         focusColor: Colors.black  ,
+         focusColor: Colors.black12  ,
          
           items: <String>{"2", "3", "5", "10", "15"}
                 .map<DropdownMenuItem<String>>(
@@ -66,7 +66,7 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
 
    DropdownButton<String>(
          
-         focusColor: Colors.black  ,
+         focusColor: Colors.black12  ,
          
           items: <String>{"2", "3", "4", "5", "6","7",}
                 .map<DropdownMenuItem<String>>(
@@ -99,7 +99,7 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
 
             onPressed: () {},
             child: const Text(
-              "Create Room",
+              "Create",
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),

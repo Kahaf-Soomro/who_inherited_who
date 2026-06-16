@@ -47,7 +47,7 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
 
             onPressed: () {},
             child: const Text(
-              "Create Room",
+              "Join",
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
