@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:who_inherited_who/home_screen.dart';
+import 'package:who_inherited_who/paint_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         colorScheme: .fromSeed(seedColor:Colors.blue),
       ),
-      home: const HomeScreen(),
+      home: const PaintScreen(),
     );
   }
 }
