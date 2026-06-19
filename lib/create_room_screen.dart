@@ -17,6 +17,18 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
   late String? _maxRoundsValue;
   late String? _maxPlayers;
 
+
+  void  createRoom(){
+    if (_nameController.text.isEmpty || _roomNameController.text.isEmpty && _maxPlayers==null && _maxRoundsValue == null) {
+      
+    } else {
+      
+    }
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +109,7 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
               
               ),
 
-            onPressed: () {},
+            onPressed: createRoom ,
             child: const Text(
               "Create",
               style: TextStyle(color: Colors.white, fontSize: 16),
