@@ -5,7 +5,7 @@
 
 model files:
 
-Room.js``
+Room.js```
 
 const mongoose = require('mongoose');
 
@@ -51,4 +51,34 @@ const roomSchema = new mongoose.Schema({
 
 }
 )
-``
+```
+
+
+Player.js
+```java
+const mongoose = require("mongoose");
+
+const playerSchema = new mongoose.Schema({
+  nickname: {
+    type: String,
+    trim: true,
+  },
+  socoketID: {
+    type: String,
+  },
+  isPartyLeader: {
+    type: Boolean,
+    deault: false,
+  },
+  points: {
+    type: Number,
+    default: 0,
+  },
+});
+
+const playerModel = mongoose.model("Player", playerSchema);
+
+multiple.exports = {playerModel, playerSchema}
+
+
+```
