@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
+import 'package:who_inherited_who/paint_screen.dart';
 import 'package:who_inherited_who/widget/custom_text_field.dart';
 
 
@@ -19,8 +20,18 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
 
 
   void  createRoom(){
-    if (_nameController.text.isEmpty || _roomNameController.text.isEmpty && _maxPlayers==null && _maxRoundsValue == null) {
-      
+    if (_nameController.text.isNotEmpty &&
+        _roomNameController.text.isNotEmpty &&
+        _maxPlayers != null &&
+        _maxRoundsValue != null) {
+      Map data = {
+        "nickname":_nameController.text,
+        "name":  _roomNameController.text,
+        "maxRounds":  _maxRoundsValue,
+        "occupancy": _maxPlayers
+
+      };
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PaintScreen(data:data, screenFrom:"CreateRoom" )));
     } else {
       
     }

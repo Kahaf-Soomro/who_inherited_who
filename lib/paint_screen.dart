@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class PaintScreen extends StatefulWidget {
-  const PaintScreen({super.key});
+  
+    final Map data;
+    final String screenFrom;
+
+  const PaintScreen({ required this.data, required this.screenFrom});
+
 
   @override
   State<PaintScreen> createState() => _PaintScreenState();
@@ -28,7 +33,9 @@ late IO.Socket _socket;
     print('before connect()');
     _socket.connect();
     print('after connect()');
+  print(widget.data);
 
+  if(widget.screenFrom == "CreateRoom")
     //listen to socket i guess the recieving part
  
   _socket.onConnect((_) {
