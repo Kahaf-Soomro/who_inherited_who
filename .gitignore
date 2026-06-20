@@ -12,6 +12,7 @@
 .swiftpm/
 migrate_working_dir/
 /server
+/server/index.js
 
 # IntelliJ related
 *.iml

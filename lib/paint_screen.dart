@@ -35,7 +35,14 @@ late IO.Socket _socket;
     print('after connect()');
   print(widget.data);
 
-  if(widget.screenFrom == "CreateRoom")
+  if(widget.screenFrom == "CreateRoom"){
+    _socket.emit("create-game", widget.data);
+  }else{
+    //join room feature
+  }
+ 
+ 
+ 
     //listen to socket i guess the recieving part
  
   _socket.onConnect((_) {
