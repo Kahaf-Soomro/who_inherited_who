@@ -39,10 +39,18 @@ String dataaOfRoom = '';
   print(widget.data);
 
   if(widget.screenFrom == "CreateRoom"){
-    _socket.emit("create-game", widget.data);
-print('room created');
+    _socket.emit(
+      "create-game",
+      [
+      widget.data['nickname'],
+      widget.data['name'],
+      widget.data['maxRounds'],
+      widget.data['occupancy'],]
+    );
+    print('room created');
   }else{
     //join room feature
+    print('room creation failed');
   }
  
  
