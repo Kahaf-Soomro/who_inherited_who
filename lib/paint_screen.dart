@@ -41,11 +41,12 @@ String dataaOfRoom = '';
   if(widget.screenFrom == "CreateRoom"){
     _socket.emit(
       "create-game",
-      [
-      widget.data['nickname'],
-      widget.data['name'],
-      widget.data['maxRounds'],
-      widget.data['occupancy'],]
+      {
+          "nickname": widget.data['nickname'],
+  "name": widget.data['name'],
+  "maxRounds": widget.data['maxRounds'],
+  "occupancy": widget.data['occupancy'],
+      }
     );
     print('room created');
   }else{

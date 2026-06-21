@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
+import 'package:who_inherited_who/paint_screen.dart';
 import 'package:who_inherited_who/widget/custom_text_field.dart';
 
 
@@ -15,6 +16,15 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _roomNameController = TextEditingController();
   
+ void joinRoon(){
+if(_nameController.text.isNotEmpty && _roomNameController.text.isNotEmpty  ){
+  Map data = {
+    "nickname":_nameController.text,
+    "name": _roomNameController.text
+  };
+  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> PaintScreen(data: data, screenFrom: "joinRoom")));
+}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +55,7 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
               
               ),
 
-            onPressed: () {},
+            onPressed: joinRoon,
             child: const Text(
               "Join",
               style: TextStyle(color: Colors.white, fontSize: 16),
