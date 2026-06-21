@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -17,6 +19,7 @@ class PaintScreen extends StatefulWidget {
 class _PaintScreenState extends State<PaintScreen> {
 
 late IO.Socket _socket;
+String dataaOfRoom = '';
 
 @override
   void initState() {
@@ -37,6 +40,7 @@ late IO.Socket _socket;
 
   if(widget.screenFrom == "CreateRoom"){
     _socket.emit("create-game", widget.data);
+print('room created');
   }else{
     //join room feature
   }
@@ -47,6 +51,19 @@ late IO.Socket _socket;
  
   _socket.onConnect((_) {
     print('Connected');
+    _socket.on('updateRoom', (roomData){
+      setState(() {
+        
+dataaOfRoom = roomData;
+      });
+      if(roomData['isJoin'] != true){
+        //Start timer 
+
+      }
+
+
+
+    });
   });
 
   _socket.onConnectError((e) {
@@ -61,6 +78,10 @@ late IO.Socket _socket;
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Container(
+        child: Text("Lobby"),
+      )
+    );
   }
 }
