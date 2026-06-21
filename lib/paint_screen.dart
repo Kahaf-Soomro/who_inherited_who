@@ -49,9 +49,15 @@ String dataaOfRoom = '';
       }
     );
     print('room created');
-  }else{
+  }
+  else if(widget.screenFrom == "JoinRoom"){
+_socket.emit('join-game',
+{  "nickname": widget.data['nickname'],
+  "name": widget.data['name'],} );
+  }
+  else{
     //join room feature
-    print('room creation failed');
+    print('Server failed');
   }
  
  

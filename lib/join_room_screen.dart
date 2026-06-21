@@ -22,7 +22,7 @@ if(_nameController.text.isNotEmpty && _roomNameController.text.isNotEmpty  ){
     "nickname":_nameController.text,
     "name": _roomNameController.text
   };
-  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> PaintScreen(data: data, screenFrom: "joinRoom")));
+  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> PaintScreen(data: data, screenFrom: "JoinRoom")));
 }
   }
 
