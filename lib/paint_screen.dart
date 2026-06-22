@@ -19,7 +19,8 @@ class PaintScreen extends StatefulWidget {
 class _PaintScreenState extends State<PaintScreen> {
 
 late IO.Socket _socket;
-String dataaOfRoom = '';
+//changing this to MAp for now, but if there is any fetching error, switch it ot string instead and initialiize with null string
+Map dataaOfRoom = {};
 
 @override
   void initState() {
@@ -93,9 +94,25 @@ dataaOfRoom = roomData;
 
   @override
   Widget build(BuildContext context) {
+      final _width = MediaQuery.sizeOf(context).width; //new SizeOf() method try instead of of(context).size.width
+      final _height = MediaQuery.sizeOf(context).height; //new SizeOf() method try instead of of(context).size.width
     return Scaffold(
-      body: Container(
-        child: Text("Lobby"),
+      body: Stack(
+        
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start ,
+            children: [
+              Container(
+                width: _width,
+                height: _height,
+              )
+            ],
+          
+          )
+
+        ],
       )
     );
   }
