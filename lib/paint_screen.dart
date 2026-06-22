@@ -21,7 +21,7 @@ class _PaintScreenState extends State<PaintScreen> {
 late IO.Socket _socket;
 //changing this to MAp for now, but if there is any fetching error, switch it ot string instead and initialiize with null string
 Map dataaOfRoom = {};
-
+List points = {};
 @override
   void initState() {
    connect();
@@ -106,7 +106,28 @@ dataaOfRoom = roomData;
             children: [
               Container(
                 width: _width,
-                height: _height,
+                height: _height*0.55,
+                child: GestureDetector(
+
+                    onPanUpdate: (details){},
+                    onPanStart:(details){},
+                    onPanEnd: (details){},
+                    child: SizedBox.expand(
+                      child:ClipRRect(
+                          borderRadius:BorderRadius.all(Radius.circular(20)),
+                        child: RepaintBoundary(//this is the canvas
+  child: CustomPaint(
+    size: Size.infinite,
+    painter: myPainter(
+      pointslist: points
+      ),
+
+  ),
+                        ),
+                      ),
+                    ),
+
+                ),
               )
             ],
           
