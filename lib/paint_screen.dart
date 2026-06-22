@@ -11,7 +11,7 @@ class PaintScreen extends StatefulWidget {
 
   const PaintScreen({ required this.data, required this.screenFrom});
 
-
+  
   @override
   State<PaintScreen> createState() => _PaintScreenState();
 }
