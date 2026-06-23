@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:who_inherited_who/models/my_painter.dart';
+import 'package:who_inherited_who/models/touch_points.dart';
 
 class PaintScreen extends StatefulWidget {
   
@@ -21,7 +23,7 @@ class _PaintScreenState extends State<PaintScreen> {
 late IO.Socket _socket;
 //changing this to MAp for now, but if there is any fetching error, switch it ot string instead and initialiize with null string
 Map dataaOfRoom = {};
-List points = {};
+List<TouchPoints> points = [];
 @override
   void initState() {
    connect();
@@ -109,16 +111,44 @@ dataaOfRoom = roomData;
                 height: _height*0.55,
                 child: GestureDetector(
 
-                    onPanUpdate: (details){},
-                    onPanStart:(details){},
-                    onPanEnd: (details){},
+                    onPanStart:(details){
+                      print('Pan Started \n Details:');
+                      print( details.localPosition.dx );
+                      _socket.emit('paint', {
+                        'details': {'dx':details.localPosition.dx, 'dy':details.localPosition.dy },
+                        'rooonName': widget.data['name'],
+                    });
+
+                    },
+                    onPanUpdate: (details){
+   print('Pan updated \n Details:');
+                      print( details.localPosition.dx );
+                      _socket.emit('paint', {
+                        'details': {'dx':details.localPosition.dx, 'dy':details.localPosition.dy },
+                        'rooonName': widget.data['name'],
+                    });
+
+                   
+                    },
+                    onPanEnd: (details){
+                      print('Pan Ended');
+                         print('Pan Started \n Details:');
+                      print( details.localPosition.dx );
+                      _socket.emit('paint', {
+                        'details': null,
+                        'rooonName': widget.data['name'],
+                    });
+
+                   
+
+                    },
                     child: SizedBox.expand(
                       child:ClipRRect(
                           borderRadius:BorderRadius.all(Radius.circular(20)),
                         child: RepaintBoundary(//this is the canvas
   child: CustomPaint(
     size: Size.infinite,
-    painter: myPainter(
+    painter: MyPainter(
       pointslist: points
       ),
 
