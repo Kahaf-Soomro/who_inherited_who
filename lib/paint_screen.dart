@@ -24,6 +24,10 @@ late IO.Socket _socket;
 //changing this to MAp for now, but if there is any fetching error, switch it ot string instead and initialiize with null string
 Map dataaOfRoom = {};
 List<TouchPoints> points = [];
+StrokeCap strokeType = StrokeCap.round;
+Color selectedColor = Colors.black;
+double opacity = 1.0; //opaque color
+double strokewidth = 2.0;
 @override
   void initState() {
    connect();
@@ -82,6 +86,25 @@ dataaOfRoom = roomData;
 
 
     });
+    _socket.on('points', (point){
+      if(point['details']!= null){
+        setState(() {
+          points.add(
+            TouchPoints(
+              paint: Paint()..strokeCap = strokeType 
+              ..isAntiAlias = true
+              ..color = selectedColor.withOpacity(opacity)
+              ..strokeWidth = strokewidth
+              //more paint configs go here
+              ,
+  points: Offset(
+    point['details']['dx'].toDouble(),
+    point['details']['dy'].toDouble(),
+  ),
+              ));
+        });
+      }
+    });
   });
 
   _socket.onConnectError((e) {
@@ -92,6 +115,12 @@ dataaOfRoom = roomData;
     print('Error: $e');
   });
 
+
+
+    
+
+
+
   }
 
   @override
@@ -99,6 +128,7 @@ dataaOfRoom = roomData;
       final _width = MediaQuery.sizeOf(context).width; //new SizeOf() method try instead of of(context).size.width
       final _height = MediaQuery.sizeOf(context).height; //new SizeOf() method try instead of of(context).size.width
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         
         children: [
