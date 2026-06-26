@@ -176,8 +176,8 @@ dataaOfRoom = roomData;
                       child:ClipRRect(
                           borderRadius:BorderRadius.all(Radius.circular(20)),
                         child: RepaintBoundary(//this is the canvas
-  child: CustomPaint(
-    size: Size.infinite,
+    child: CustomPaint(
+    size: Size(_width, _height*0.55),
     painter: MyPainter(
       pointslist: points
       ),
