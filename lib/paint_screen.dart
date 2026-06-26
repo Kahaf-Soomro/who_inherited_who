@@ -23,7 +23,7 @@ class _PaintScreenState extends State<PaintScreen> {
 late IO.Socket _socket;
 //changing this to MAp for now, but if there is any fetching error, switch it ot string instead and initialiize with null string
 Map dataaOfRoom = {};
-List<TouchPoints> points = [];
+List<TouchPoints?> points = [];
 StrokeCap strokeType = StrokeCap.round;
 Color selectedColor = Colors.black;
 double opacity = 1.0; //opaque color
@@ -87,6 +87,8 @@ dataaOfRoom = roomData;
 
     });
     _socket.on('points', (point){
+      print("POINT RECEIVED");
+print(point);
       if(point['details']!= null){
         setState(() {
           points.add(
@@ -102,8 +104,13 @@ dataaOfRoom = roomData;
     point['details']['dy'].toDouble(),
   ),
               ));
+              print("POINT EVENT RECEIVED");
+print(point);
         });
-      }
+      } else {
+  points.add(null);
+  print("null point addede");
+}
     });
   });
 
@@ -146,7 +153,7 @@ dataaOfRoom = roomData;
                       print( details.localPosition.dx );
                       _socket.emit('paint', {
                         'details': {'dx':details.localPosition.dx, 'dy':details.localPosition.dy },
-                        'rooonName': widget.data['name'],
+                        'roomName': widget.data['name'],
                     });
 
                     },
@@ -155,18 +162,17 @@ dataaOfRoom = roomData;
                       print( details.localPosition.dx );
                       _socket.emit('paint', {
                         'details': {'dx':details.localPosition.dx, 'dy':details.localPosition.dy },
-                        'rooonName': widget.data['name'],
+                        'roomName': widget.data['name'],
                     });
 
                    
                     },
                     onPanEnd: (details){
                       print('Pan Ended');
-                         print('Pan Started \n Details:');
                       print( details.localPosition.dx );
                       _socket.emit('paint', {
                         'details': null,
-                        'rooonName': widget.data['name'],
+                        'roomName': widget.data['name'],
                     });
 
                    
@@ -188,7 +194,11 @@ dataaOfRoom = roomData;
                     ),
 
                 ),
-              )
+              ),
+              Row(
+                children: [
+                ],
+              ),
             ],
           
           )

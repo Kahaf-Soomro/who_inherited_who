@@ -6,7 +6,7 @@
 
   class MyPainter extends CustomPainter{
   MyPainter({required this.pointslist});
-  List<TouchPoints> pointslist;
+  List<TouchPoints?> pointslist;
   List<Offset> offsetPOINTS = [];
 
     @override
@@ -24,16 +24,16 @@ print("paint called ${pointslist.length}");
         {
           
             //two points measn draw line
-            canvas.drawLine(pointslist[i].points, pointslist[i+1].points, pointslist[i].paint);
+            canvas.drawLine(pointslist[i]!.points, pointslist[i+1]!.points, pointslist[i]!.paint);
           print('line drawn');
         // ignore: dead_code
         } if(pointslist[i]!=null && pointslist[i+1]==null){
           print('point drawn');
           offsetPOINTS.clear();
-          offsetPOINTS.add(pointslist[i].points);
-    offsetPOINTS.add(Offset(pointslist[i].points.dx+0.1, pointslist[i].points.dy+0.1));
+          offsetPOINTS.add(pointslist[i]!.points);
+    offsetPOINTS.add(Offset(pointslist[i]!.points.dx+0.1, pointslist[i]!.points.dy+0.1));
       
-      canvas.drawPoints(ui.PointMode.points,offsetPOINTS,pointslist[i].paint);
+      canvas.drawPoints(ui.PointMode.points,offsetPOINTS,pointslist[i]!.paint);
       
         }else{
 
