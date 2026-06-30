@@ -28,6 +28,13 @@ StrokeCap strokeType = StrokeCap.round;
 Color selectedColor = Colors.black;
 double opacity = 1.0; //opaque color
 double strokewidth = 2.0;
+
+void selectColor(){
+  showDialog(context: context, builder:(context)=> AlertDialog(
+    
+  ));
+}
+
 @override
   void initState() {
    connect();
@@ -197,6 +204,18 @@ print(point);
               ),
               Row(
                 children: [
+                  IconButton(onPressed: (){
+                    selectColor();
+                  }, icon: Icon(Icons.color_lens, color:selectedColor))
+              , Expanded(child: Slider(min:1.0 , max: 10, label:"Stroke width: $strokewidth", value: strokewidth, onChanged: (double value){
+                strokewidth = value;
+              
+                
+                
+              })),
+         // clear screen button->
+                  IconButton(onPressed: (){}, icon: Icon(Icons.color_lens, color:selectedColor))
+                 
                 ],
               ),
             ],
