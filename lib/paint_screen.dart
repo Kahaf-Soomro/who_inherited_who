@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:who_inherited_who/models/my_painter.dart';
 import 'package:who_inherited_who/models/touch_points.dart';
@@ -31,7 +32,18 @@ double strokewidth = 2.0;
 
 void selectColor(){
   showDialog(context: context, builder:(context)=> AlertDialog(
-    
+      title: const Text("|choose color"),
+      content: SingleChildScrollView(
+
+        child: BlockPicker(pickerColor: selectedColor, onColorChanged: (color){
+            String colorString = color.toString();
+              String valueString = colorString.split('(0x')[1].split(')')[0];
+        print(colorString);
+        print(valueString);
+      
+        }) ,
+
+      ),
   ));
 }
 
