@@ -36,14 +36,26 @@ void selectColor(){
       content: SingleChildScrollView(
 
         child: BlockPicker(pickerColor: selectedColor, onColorChanged: (color){
-            String colorString = color.toString();
-              String valueString = colorString.split('(0x')[1].split(')')[0];
-        print(colorString);
+       print(color);
+          String valueString = color.toARGB32().toRadixString(16);
+
         print(valueString);
-      
+
+        Map map = {
+          'color': valueString,
+          'roomName': dataaOfRoom['name'],
+            //anythung else?
+                  };
+        _socket.emit('color-change', map);
         }) ,
 
       ),
+      actions: [
+        TextButton(onPressed: (){
+            Navigator.of(context).pop();
+        },
+         child: Text('close'))
+      ],
   ));
 }
 
@@ -142,9 +154,36 @@ print(point);
   });
 
 
+  _socket.on('color-change', (colorString){
 
+    int value = int.parse(colorString, radix: 16);
+    Color colorChanged = new Color(value);
+
+    setState((){
+      selectedColor = colorChanged;
+
+    });
+  });
+    
+  _socket.on('change-weight', (strokeVal){
+
+    print("Stroke Weight changed");
     
 
+    setState((){
+        strokewidth = (strokeVal as num).toDouble();
+
+    });
+  });
+           _socket.on('clear-screen', (nullData){
+            //data is null from the server hence nullData
+           
+           setState(() {
+             points.clear(); //array is empty by this
+             print('screen cleared');
+
+           });
+           });
 
 
   }
@@ -220,14 +259,23 @@ print(point);
                     selectColor();
                   }, icon: Icon(Icons.color_lens, color:selectedColor))
               , Expanded(child: Slider(min:1.0 , max: 10, label:"Stroke width: $strokewidth", value: strokewidth, onChanged: (double value){
-                strokewidth = value;
-              
+                
+                Map data = {
+                  'value': value,
+                  'roomName': dataaOfRoom['name']
+                };
+                _socket.emit('change-weight', data );
                 
                 
               })),
          // clear screen button->
-                  IconButton(onPressed: (){}, icon: Icon(Icons.color_lens, color:selectedColor))
-                 
+                  IconButton(onPressed: (){
+
+                      _socket.emit('clear-screen', dataaOfRoom['name']);
+
+                  }
+                  , icon: Icon(Icons.cleaning_services, color:selectedColor))
+                
                 ],
               ),
             ],
