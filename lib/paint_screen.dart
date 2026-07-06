@@ -268,10 +268,10 @@ print(point);
                 
                 
               })),
-         // clear screen button->
+         // clear screen button
                   IconButton(onPressed: (){
 
-                      _socket.emit('clear-screen', dataaOfRoom['name']);
+                      _socket.on('clear-screen', dataaOfRoom['name']);
 
                   }
                   , icon: Icon(Icons.cleaning_services, color:selectedColor))
