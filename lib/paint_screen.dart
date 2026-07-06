@@ -29,7 +29,27 @@ StrokeCap strokeType = StrokeCap.round;
 Color selectedColor = Colors.black;
 double opacity = 1.0; //opaque color
 double strokewidth = 2.0;
+List<Widget> TextEmptyWidget = [];
+ScrollController _scrollController = new ScrollController();
+List<Map> messages = [];
 
+
+TextEditingController _inputController = new TextEditingController();
+
+
+
+void renderTextHidden(String word){
+  TextEmptyWidget.clear();
+  for(int i = 0; i<word.length; i++){
+      TextEmptyWidget.add(Text('_', style: TextStyle(fontSize: 30),)); //This is for how a word is hidden
+  }
+}
+void renderTextVisible(String word){
+  TextEmptyWidget.clear();
+ 
+      TextEmptyWidget.add(Text(word)); //This is for how a word is hidden
+
+}
 void selectColor(){
   showDialog(context: context, builder:(context)=> AlertDialog(
       title: const Text("|choose color"),
@@ -105,8 +125,9 @@ _socket.emit('join-game',
   _socket.onConnect((_) {
     print('Connected');
     _socket.on('updateRoom', (roomData){
+      print('word = '+ roomData['word']);
       setState(() {
-        
+        renderTextHidden(roomData['word']);
 dataaOfRoom = roomData;
       });
       if(roomData['isJoin'] != true){
@@ -278,8 +299,91 @@ print(point);
                 
                 ],
               ),
+              //chat 
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: TextEmptyWidget ,
+              ),
+              Container(
+                height:  MediaQuery.sizeOf(context).height+0.3,
+      child: ListView.builder(
+        controller: _scrollController,
+          shrinkWrap:true,
+          itemCount: messages.length, //as many texts/chats
+        itemBuilder: (context, index){
+          var msgMapTemp = messages[index].values;
+
+              return ListTile(
+                dense: true,
+                 visualDensity: const VisualDensity(vertical: -4),
+  minLeadingWidth: 0,
+  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                  title: Text(
+  msgMapTemp.elementAt(0),
+  style: const TextStyle(
+    fontSize: 19,
+    fontWeight: FontWeight.bold,
+    color: Color(0xFF202225),
+  ),
+),//username
+    subtitle: Padding(
+    padding: const EdgeInsets.only(top: 2),
+    child: Text(
+      msgMapTemp.elementAt(1), // message
+      style: const TextStyle(
+        fontSize: 16,
+        color: Color(0xFF2F3136),
+        height: 1.3,
+      ),
+    ),
+  ),
+
+
+
+
+
+              );
+        }),
+              )
             ],
           
+          ),
+
+
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: TextField(
+
+        controller: _inputController,
+        autocorrect: false,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color:Colors.transparent)
+            ),
+
+            enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color:Colors.blueAccent)
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            filled: true,
+            fillColor: const Color(0xff5F5FA),
+          hintText: 'Your Guess',
+          hintStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
+
+          ),
+          textInputAction: TextInputAction.done,
+          onSubmitted: (text){
+              if(text.trim().isNotEmpty){
+               
+              }
+          },
+        ),
+            ) 
+            ,
           )
 
         ],
