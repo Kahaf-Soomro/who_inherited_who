@@ -206,6 +206,20 @@ print(point);
            });
            });
 
+           _socket.on('msg-recieve', (msgData){
+            print('msg recieved');
+            print(msgData);
+                setState(() {
+                  messages.add(Map<String, dynamic>.from(msgData));
+
+                  _scrollController.animateTo(_scrollController.position.maxScrollExtent+40, duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+                
+                
+                });
+                print('messages List length: ${messages.length}');
+
+           } );
+
 
   }
 
@@ -292,7 +306,7 @@ print(point);
          // clear screen button
                   IconButton(onPressed: (){
 
-                      _socket.on('clear-screen', dataaOfRoom['name']);
+                      _socket.emit('clear-screen', dataaOfRoom['name']);
 
                   }
                   , icon: Icon(Icons.cleaning_services, color:selectedColor))
@@ -304,8 +318,7 @@ print(point);
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: TextEmptyWidget ,
               ),
-              Container(
-                height:  MediaQuery.sizeOf(context).height+0.3,
+              Expanded(
       child: ListView.builder(
         controller: _scrollController,
           shrinkWrap:true,
@@ -378,7 +391,18 @@ print(point);
           textInputAction: TextInputAction.done,
           onSubmitted: (text){
               if(text.trim().isNotEmpty){
-               
+                  Map msgMap = {
+                    'username': widget.data['nickname'],
+                    'msg':text.trim(),
+                    'word':dataaOfRoom['word'],
+                 'roomName':widget.data['name'],
+                //  'totalTime':
+                  };
+                  print("Sending:");
+                  print(msgMap);
+
+                  _socket.emit('msg-recieve', msgMap);
+                  _inputController.clear();
               }
           },
         ),
