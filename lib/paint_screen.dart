@@ -33,6 +33,8 @@ List<Widget> TextEmptyWidget = [];
 ScrollController _scrollController = new ScrollController();
 List<Map> messages = [];
 
+int guessedUserCtr = 0;
+
 
 TextEditingController _inputController = new TextEditingController();
 
@@ -210,7 +212,17 @@ print(point);
             print('msg recieved');
             print(msgData);
                 setState(() {
+
                   messages.add(Map<String, dynamic>.from(msgData));
+                  guessedUserCtr = msgData['guessUserCtr'];
+                  print('Guessed User Counter: ${guessedUserCtr} ');
+
+                  if(guessedUserCtr == dataaOfRoom['players'].length-1) //drawer can not guess
+                  {
+                        _socket.emit('change-turn', dataaOfRoom['name']);
+                        
+                  }
+
 
                   _scrollController.animateTo(_scrollController.position.maxScrollExtent+40, duration: Duration(milliseconds: 200), curve: Curves.easeIn);
                 
@@ -219,6 +231,35 @@ print(point);
                 print('messages List length: ${messages.length}');
 
            } );
+
+
+
+              _socket.on('change-turn', (data){
+                String oldWord = dataaOfRoom['word'];
+                  showDialog(context: context, builder:(context){
+                    Future.delayed(Duration(seconds:3), (){
+    setState(() {
+  dataaOfRoom = data;
+  renderTextHidden(data['word']);
+  guessedUserCtr = 0;
+  renderTextVisible(data['word']);
+  points.clear();
+  
+});
+
+
+  Navigator.of(context).pop();
+                      
+                    });
+            return AlertDialog(
+                              title: Center(child: Text('The Word was ${oldWord}'),) ,
+                              
+                              
+                        );
+                  });
+
+              }  );
+
 
 
   }
@@ -396,6 +437,7 @@ print(point);
                     'msg':text.trim(),
                     'word':dataaOfRoom['word'],
                  'roomName':widget.data['name'],
+                 'guessedUserCtr':guessedUserCtr
                 //  'totalTime':
                   };
                   print("Sending:");
