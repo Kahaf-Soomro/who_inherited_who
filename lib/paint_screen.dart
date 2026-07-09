@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -32,14 +33,31 @@ double strokewidth = 2.0;
 List<Widget> TextEmptyWidget = [];
 ScrollController _scrollController = new ScrollController();
 List<Map> messages = [];
-
+int roundTime = 60;
+int _timerStart = 60;
+late Timer _timer ;
 int guessedUserCtr = 0;
 
 
 TextEditingController _inputController = new TextEditingController();
 
 
+void startTime(){
+  const second = const Duration(seconds: 1);
+  _timer = new Timer.periodic(second, (Timer t){
+    if(_timerStart ==0 ){
+      _socket.emit('change-turn', dataaOfRoom['name']);
+      setState(() {
+        _timer.cancel();
+      });
+    }else{
+      setState(() {
+        _timerStart--;
+      });
+    }
+  });
 
+}
 void renderTextHidden(String word){
   TextEmptyWidget.clear();
   for(int i = 0; i<word.length; i++){
@@ -134,7 +152,7 @@ dataaOfRoom = roomData;
       });
       if(roomData['isJoin'] != true){
         //Start timer 
-
+        startTime();
       }
 
 
@@ -243,12 +261,16 @@ print(point);
   renderTextHidden(data['word']);
   guessedUserCtr = 0;
   renderTextVisible(data['word']);
+  _timerStart = 60;
+
   points.clear();
   
 });
 
 
   Navigator.of(context).pop();
+                    _timer.cancel();
+                    startTime();
                       
                     });
             return AlertDialog(
@@ -437,8 +459,10 @@ print(point);
                     'msg':text.trim(),
                     'word':dataaOfRoom['word'],
                  'roomName':widget.data['name'],
-                 'guessedUserCtr':guessedUserCtr
-                //  'totalTime':
+                 'guessedUserCtr':guessedUserCtr,
+                
+                  'totalTime': roundTime,
+                  'timeTaken': 60-_timerStart,
                   };
                   print("Sending:");
                   print(msgMap);
@@ -457,9 +481,13 @@ print(point);
       floatingActionButton:Container(
         margin: EdgeInsets.only(bottom: 30),
         child: FloatingActionButton(onPressed: (){
-          //timer
           
-        }),
+
+        },
+        elevation: 7,
+        backgroundColor: Colors.white,
+        child: Text('$_timerStart', style:  TextStyle(color: Colors.blue, fontSize: 22, fontWeight: FontWeight.bold),),
+        ),
       ) ,
 
     );
