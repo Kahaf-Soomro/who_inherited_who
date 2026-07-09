@@ -453,7 +453,15 @@ print(point);
           )
 
         ],
-      )
+      ),
+      floatingActionButton:Container(
+        margin: EdgeInsets.only(bottom: 30),
+        child: FloatingActionButton(onPressed: (){
+          //timer
+          
+        }),
+      ) ,
+
     );
   }
 }
