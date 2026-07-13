@@ -292,8 +292,11 @@ print(point);
       final _height = MediaQuery.sizeOf(context).height; //new SizeOf() method try instead of of(context).size.width
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        
+      body: dataaOfRoom !=null  ?
+        dataaOfRoom['isJoin']!=true?
+
+      
+       Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -377,10 +380,11 @@ print(point);
                 ],
               ),
               //chat 
-              Row(
+             dataaOfRoom['turn']['nickname']!= widget.data['nickname'] ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: TextEmptyWidget ,
-              ),
+              ) : Center(child: Text(dataaOfRoom['word'], style: TextStyle( fontSize: 30),),)
+              ,
               Expanded(
       child: ListView.builder(
         controller: _scrollController,
@@ -424,6 +428,7 @@ print(point);
             ],
           
           ),
+          dataaOfRoom['turn']['nickname'] != widget.data['nickname'] ?
 
 
           Align(
@@ -474,10 +479,16 @@ print(point);
         ),
             ) 
             ,
-          )
+          ): Container(
+
+          ),
 
         ],
-      ),
+      ): WaitingRoomScreen()
+
+
+      : Center(child: CircularProgressIndicator() ),
+    
       floatingActionButton:Container(
         margin: EdgeInsets.only(bottom: 30),
         child: FloatingActionButton(onPressed: (){
