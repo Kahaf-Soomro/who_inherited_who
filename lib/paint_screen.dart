@@ -7,6 +7,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:who_inherited_who/models/my_painter.dart';
 import 'package:who_inherited_who/models/touch_points.dart';
+import 'package:who_inherited_who/waiting_room_screen.dart';
 
 class PaintScreen extends StatefulWidget {
   
@@ -106,7 +107,7 @@ void selectColor(){
   }
   //thus is for socket io client connection
   void connect(){
-    _socket = IO.io('http://192.168.1.229:3000', <String, dynamic> {
+    _socket = IO.io('http://192.168.1.47:3000', <String, dynamic> {
         'transports': ['websocket'],
         'autoConnect': false
     });
@@ -292,7 +293,7 @@ print(point);
       final _height = MediaQuery.sizeOf(context).height; //new SizeOf() method try instead of of(context).size.width
     return Scaffold(
       backgroundColor: Colors.white,
-      body: dataaOfRoom !=null  ?
+      body: dataaOfRoom.isNotEmpty ?
         dataaOfRoom['isJoin']!=true?
 
       
@@ -484,7 +485,7 @@ print(point);
           ),
 
         ],
-      ): WaitingRoomScreen()
+      ):  WaitingRoomScreen(roomName: dataaOfRoom['name'] , totalPlayers: dataaOfRoom['players'].length, roomSize:dataaOfRoom['occupancy'] , players: dataaOfRoom['players'], )
 
 
       : Center(child: CircularProgressIndicator() ),
@@ -500,6 +501,7 @@ print(point);
         child: Text('$_timerStart', style:  TextStyle(color: Colors.blue, fontSize: 22, fontWeight: FontWeight.bold),),
         ),
       ) ,
+      
 
     );
   }
