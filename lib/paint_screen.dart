@@ -38,6 +38,7 @@ int roundTime = 60;
 int _timerStart = 60;
 late Timer _timer ;
 int guessedUserCtr = 0;
+var mainScaffoldKey = GlobalKey<ScaffoldState>();
 
 
 TextEditingController _inputController = new TextEditingController();
@@ -297,6 +298,11 @@ guessedUserCtr = msgData['guessedUserCtr'];
       final _width = MediaQuery.sizeOf(context).width; //new SizeOf() method try instead of of(context).size.width
       final _height = MediaQuery.sizeOf(context).height; //new SizeOf() method try instead of of(context).size.width
     return Scaffold(
+
+      key: mainScaffoldKey,
+        drawer: PlayerDrawer()
+        ,
+      
       backgroundColor: Colors.white,
       body: dataaOfRoom.isNotEmpty ?
         dataaOfRoom['isJoin']!=true?
@@ -488,9 +494,16 @@ guessedUserCtr = msgData['guessedUserCtr'];
           ): Container(
 
           ),
+          SafeArea(child: IconButton(
+            onPressed: ()=> mainScaffoldKey.currentState?.openDrawer()
+          
+          
+          , icon:Icon(Icons.menu, color: Colors.black,)))
 
         ],
-      ):  WaitingRoomScreen(roomName: dataaOfRoom['name'] , totalPlayers: dataaOfRoom['players'].length, roomSize:dataaOfRoom['occupancy'] , players: dataaOfRoom['players'], )
+      )
+      
+      :  WaitingRoomScreen(roomName: dataaOfRoom['name'] , totalPlayers: dataaOfRoom['players'].length, roomSize:dataaOfRoom['occupancy'] , players: dataaOfRoom['players'], )
 
 
       : Center(child: CircularProgressIndicator() ),
