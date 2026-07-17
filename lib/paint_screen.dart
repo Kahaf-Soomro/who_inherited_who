@@ -233,7 +233,12 @@ print(point);
                 setState(() {
 
                   messages.add(Map<String, dynamic>.from(msgData));
-                  guessedUserCtr = msgData['guessUserCtr'];
+                  print(msgData);
+print(msgData['guessedUserCtr']);
+print(msgData['guessedUserCtr']?.runtimeType);
+                  guessedUserCtr = msgData['guessedUserCtr'];
+
+guessedUserCtr = msgData['guessedUserCtr'];
                   print('Guessed User Counter: ${guessedUserCtr} ');
 
                   if(guessedUserCtr == dataaOfRoom['players'].length-1) //drawer can not guess
