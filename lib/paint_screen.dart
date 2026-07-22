@@ -8,6 +8,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:who_inherited_who/models/my_painter.dart';
 import 'package:who_inherited_who/models/touch_points.dart';
 import 'package:who_inherited_who/waiting_room_screen.dart';
+import 'package:who_inherited_who/widget/sidebar/sidebar.dart';
 
 class PaintScreen extends StatefulWidget {
   
@@ -24,7 +25,7 @@ class PaintScreen extends StatefulWidget {
 class _PaintScreenState extends State<PaintScreen> {
 
 late IO.Socket _socket;
-//changing this to MAp for now, but if there is any fetching error, switch it ot string instead and initialiize with null string
+//changing this to Mqp for now, but if there is any fetching error, switch it ot string instead and initialiize with null string
 Map dataaOfRoom = {};
 List<TouchPoints?> points = [];
 StrokeCap strokeType = StrokeCap.round;
@@ -39,7 +40,7 @@ int _timerStart = 60;
 late Timer _timer ;
 int guessedUserCtr = 0;
 var mainScaffoldKey = GlobalKey<ScaffoldState>();
-
+List<Map> scoreBoard = [];
 
 TextEditingController _inputController = new TextEditingController();
 
@@ -156,7 +157,20 @@ dataaOfRoom = roomData;
         //Start timer 
         startTime();
       }
+      scoreBoard.clear(); 
+    for
+    (int i = 0 ; i<= roomData['players'].length; i++ ){
+      setState(() {
+        
+        scoreBoard.add({
 
+            'username': roomData['players'][i]['nickname'] ,
+            points: roomData['players'][i]['nickname'].toString()
+
+        }
+        );
+      });
+    }
 
 
     });
@@ -300,8 +314,7 @@ guessedUserCtr = msgData['guessedUserCtr'];
     return Scaffold(
 
       key: mainScaffoldKey,
-        drawer: PlayerDrawer()
-        ,
+        drawer: PlayerScoreBoardDrawer(playerData: scoreBoard,),
       
       backgroundColor: Colors.white,
       body: dataaOfRoom.isNotEmpty ?
