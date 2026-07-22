@@ -109,7 +109,7 @@ void selectColor(){
   }
   //thus is for socket io client connection
   void connect(){
-    _socket = IO.io('http://192.168.1.47:3000', <String, dynamic> {
+    _socket = IO.io('http://localhost:3000', <String, dynamic> {
         'transports': ['websocket'],
         'autoConnect': false
     });
@@ -118,7 +118,6 @@ void selectColor(){
     _socket.connect();
     print('after connect()');
   print(widget.data);
-
   if(widget.screenFrom == "CreateRoom"){
     _socket.emit(
       "create-game",
@@ -140,7 +139,7 @@ _socket.emit('join-game',
     //join room feature
     print('Server failed');
   }
- 
+
  
  
     //listen to socket i guess the recieving part
@@ -158,19 +157,26 @@ dataaOfRoom = roomData;
         startTime();
       }
       scoreBoard.clear(); 
+      print('error Happened here: send data to Scoreboard');
+      try{
+
     for
-    (int i = 0 ; i<= roomData['players'].length; i++ ){
+    (int i = 0 ; i< roomData['players'].length; i++ ){
       setState(() {
         
         scoreBoard.add({
 
             'username': roomData['players'][i]['nickname'] ,
-            points: roomData['players'][i]['nickname'].toString()
+            'points': roomData['players'][i]['nickname'].toString()
 
         }
         );
       });
     }
+      }catch(e, st){
+        print("Error at scoreboard loop: $e ");
+        print(st);
+      }
 
 
     });
@@ -314,7 +320,7 @@ guessedUserCtr = msgData['guessedUserCtr'];
     return Scaffold(
 
       key: mainScaffoldKey,
-        drawer: PlayerScoreBoardDrawer(playerData: scoreBoard,),
+        drawer: PlayerScoreBoardDrawer(playerData: scoreBoard, ),
       
       backgroundColor: Colors.white,
       body: dataaOfRoom.isNotEmpty ?
