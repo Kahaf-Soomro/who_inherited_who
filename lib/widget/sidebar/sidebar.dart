@@ -17,7 +17,7 @@ final List<Map> playerData;
             var dat = playerData[index].values;
 return ListTile(
   title: Text(dat.elementAt(0), style: TextStyle(color: Colors.black, fontSize:23 ),),
-  trailing: Text(dat.elementAt(0), style: TextStyle(color: const Color.fromARGB(255, 3, 109, 35), fontSize:20, fontWeight: .bold ),) ,
+  trailing: Text(dat.elementAt(1), style: TextStyle(color: const Color.fromARGB(255, 3, 109, 35), fontSize:20, fontWeight: .bold ),) ,
 
 );
         }

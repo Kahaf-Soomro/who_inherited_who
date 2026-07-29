@@ -42,11 +42,13 @@ int guessedUserCtr = 0;
 var mainScaffoldKey = GlobalKey<ScaffoldState>();
 List<Map> scoreBoard = [];
 bool _ChangingturnRailGuard = false;
-
+bool _timeStarted = false;
 TextEditingController _inputController = new TextEditingController();
 
 
 void startTime(){
+  _timeStarted = true;
+
   const second = const Duration(seconds: 1);
   _timer = new Timer.periodic(second, (Timer t){
     if(_timerStart ==0 ){
@@ -155,8 +157,8 @@ _socket.emit('join-game',
         renderTextHidden(roomData['word']);
 dataaOfRoom = roomData;
       });
-      if(roomData['isJoin'] != true){
-  //Removed time start from here as it stacks up in next rounds
+      if(roomData['isJoin'] == false && _timerStart == 60 && !_timeStarted){
+            startTime();
       }
       scoreBoard.clear(); 
       print('error Happened here: send data to Scoreboard');
@@ -169,7 +171,7 @@ dataaOfRoom = roomData;
         scoreBoard.add({
 
             'username': roomData['players'][i]['nickname'] ,
-            'points': roomData['players'][i]['nickname'].toString()
+            'points': roomData['players'][i]['points'].toString()
 
         }
         );
