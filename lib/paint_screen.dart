@@ -41,6 +41,7 @@ late Timer _timer ;
 int guessedUserCtr = 0;
 var mainScaffoldKey = GlobalKey<ScaffoldState>();
 List<Map> scoreBoard = [];
+bool _ChangingturnRailGuard = false;
 
 TextEditingController _inputController = new TextEditingController();
 
@@ -269,10 +270,19 @@ guessedUserCtr = msgData['guessedUserCtr'];
                   }
 
 
-                  _scrollController.animateTo(_scrollController.position.maxScrollExtent+40, duration: Duration(milliseconds: 200), curve: Curves.easeIn);
-                
+});
                 
                 });
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+  if (_scrollController.hasClients) {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent + 40,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeIn,
+    );
+  }else{
+    print('scroll controller ke pass clients nhi hen');
+  }
                 print('messages List length: ${messages.length}');
 
            } );
@@ -280,24 +290,36 @@ guessedUserCtr = msgData['guessedUserCtr'];
 
 
               _socket.on('change-turn', (data){
+                if(_ChangingturnRailGuard) return;
+                _ChangingturnRailGuard = true;
+                                
                 String oldWord = dataaOfRoom['word'];
-                  showDialog(context: context, builder:(context){
+                  showDialog(context: context, barrierDismissible: false , builder:(context){
                     Future.delayed(Duration(seconds:3), (){
+                      if (!mounted) {
+                          return;
+                      }
+  Navigator.of(context).pop();
+
+                      
     setState(() {
   dataaOfRoom = data;
   renderTextHidden(data['word']);
   guessedUserCtr = 0;
-  renderTextVisible(data['word']);
+
   _timerStart = 60;
 
   points.clear();
   
 });
 
+if(_timer.isActive){
 
-  Navigator.of(context).pop();
                     _timer.cancel();
+}
+_timerStart = 60;
                     startTime();
+                    _ChangingturnRailGuard = false;
                       
                     });
             return AlertDialog(
