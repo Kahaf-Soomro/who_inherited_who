@@ -113,7 +113,7 @@ void selectColor(){
   }
   //thus is for socket io client connection
   void connect(){
-    _socket = IO.io('http://localhost:3000', <String, dynamic> {
+    _socket = IO.io('http://192.168.1.47:3000', <String, dynamic> {
         'transports': ['websocket'],
         'autoConnect': false
     });
@@ -151,6 +151,18 @@ _socket.emit('join-game',
   _socket.onConnect((_) {
     print('Connected');
   });
+  
+_socket.onDisconnect((_) {
+  print("SOCKET DISCONNECTED");
+});
+
+_socket.onConnectError((e) {
+  print("CONNECT ERROR: $e");
+});
+
+_socket.onError((e) {
+  print("SOCKET ERROR: $e");
+});
     _socket.on('updateRoom', (roomData){
       print('word = '+ roomData['word']);
       setState(() {

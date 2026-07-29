@@ -38,7 +38,7 @@ app.use(express.json());
 
 //connect to db
 
-const DB = 'mongodb+srv://<Username>:<password>@cluster0.ahmhpyr.mongodb.net/?appName=Cluster0';
+const DB = 'mongodb+srv://yourMongoDBServer@cluster0.ahmhpyr.mongodb.net/?appName=Cluster0';
 
 mongoose.connect(DB).then(()=>{
     console.log('Connection successful');   
@@ -64,7 +64,9 @@ io.on('connection',  (socket)=>{
             }
             
             let room = new Room();
-            const word  = 'dummy word';
+            const word  = getWordsForSWEStudents();
+            console.log("Random word: ", word);
+            
             room.word = word;
             room.name = name;
             room.maxRounds = maxRounds;
@@ -85,6 +87,8 @@ io.on('connection',  (socket)=>{
             socket.join(room.name);
             io.to(name).emit('updateRoom', room);
             console.log('Room Created,');
+            console.log(room.word);
+            
             
     } catch (error) {
         console.log(error);
@@ -171,7 +175,116 @@ if (existingPlayer) {
     console.log("paint called through index.js");
     console.log("Room name: "+ data.roomName );
   })
+  //msg-recieve
+  socket.on("msg-recieve", async (data) => {
+  console.log(data);
+
+  try {
+    // Wrong guess
+    if (data.msg !== data.word) {
+      return io.to(data.roomName).emit("msg-recieve", {
+        username: data.username,
+        msg: data.msg,
+        guessedUserCtr: data.guessedUserCtr,
+      });
+    }
+
+    // Correct guess
+    const room = await Room.findOne({ name: data.roomName });
+    if (!room) return;
+
+    const player = room.players.find(
+      (p) => p.nickname === data.username
+    );
+
+    if (player && data.timeTaken > 0) {
+      const maxScore = 200;
+      const minScore = 20;
+      const roundLength = 60;
+
+      const earnedPoints = Math.round(
+        minScore +
+          ((roundLength - data.timeTaken) / roundLength) *
+            (maxScore - minScore)
+      );
+
+      player.points += earnedPoints;
+      await room.save();
+    }
+
+    console.log("Correct Guess:", data);
+    const guessedPlayers = data.guessedUserCtr + 1;
+
+    io.to(room.name).emit("msg-recieve", {
+      username: data.username,
+      msg: "Guessed it!",
+      guessedUserCtr: guessedPlayers,
+    });
+
+if (guessedPlayers >= room.players.length - 1) {
+  console.log("All players guessed the word");
+  
+    socket.emit("change-turn", room.name);
+}
+
+  } catch (err) {
+    console.log(err);
+  }
+});
+  socket.on('change-turn', async(name)=>{
+    try{
+
+      let room = await Room.findOne({name});
+      if(!room){
+        console.log('room not found: ', name);
+        return;
+      }
+      let index = room.turnIndex;
+      if(index+1 == room.players.length)
+      {
+        room.currentRound+=1;
+
+      }
+      if(room.currentRound<=room.maxRounds)
+          {
+            console.log('previous word: '+ room.word);
+            
+             const word  = getWordsForSWEStudents();
+             room.word = word;
+            console.log("New Random word: ", word);
+            room.turnIndex = (index+1) % room.players.length;
+            room.turn = room.players[room.turnIndex] 
+            room = await room.save()
+            io.to(name).emit('change-turn', room)
+            io.to(name).emit('updateRoom', room);
+          } else{
+            //show results tab
+          }
+
+      }catch(e){
+        console.log(e)
+
+    }
+  })
+  //color socket here
+socket.on('color-change', ({color, roomName}) =>{
+  io.to(roomName).emit('color-change', color)
+});
+  //color socket here
+socket.on('change-weight', ({value, roomName}) =>{
+  io.to(roomName).emit('change-weight', value)
+
+});
+
+//for clear creen socket
+socket.on('clear-screen', (roomName) => {
+  io.to(roomName).emit('clear-screen', '');
+} )
+
 })
+
+
+
 
 //start the server
 server.listen(port, '0.0.0.0', ()=>{
