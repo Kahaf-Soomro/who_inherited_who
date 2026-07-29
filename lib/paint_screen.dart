@@ -50,6 +50,7 @@ void startTime(){
   const second = const Duration(seconds: 1);
   _timer = new Timer.periodic(second, (Timer t){
     if(_timerStart ==0 ){
+      print('timer Over! changing turns');
       _socket.emit('change-turn', dataaOfRoom['name']);
       setState(() {
         _timer.cancel();
@@ -147,6 +148,7 @@ _socket.emit('join-game',
  
   _socket.onConnect((_) {
     print('Connected');
+  });
     _socket.on('updateRoom', (roomData){
       print('word = '+ roomData['word']);
       setState(() {
@@ -154,8 +156,7 @@ _socket.emit('join-game',
 dataaOfRoom = roomData;
       });
       if(roomData['isJoin'] != true){
-        //Start timer 
-        startTime();
+  //Removed time start from here as it stacks up in next rounds
       }
       scoreBoard.clear(); 
       print('error Happened here: send data to Scoreboard');
@@ -207,7 +208,7 @@ print(point);
   print("null point addede");
 }
     });
-  });
+  
 
   _socket.onConnectError((e) {
     print('Connect Error: $e');
@@ -260,15 +261,14 @@ print(msgData['guessedUserCtr']);
 print(msgData['guessedUserCtr']?.runtimeType);
                   guessedUserCtr = msgData['guessedUserCtr'];
 
-guessedUserCtr = msgData['guessedUserCtr'];
                   print('Guessed User Counter: ${guessedUserCtr} ');
 
-                  if(guessedUserCtr == dataaOfRoom['players'].length-1) //drawer can not guess
-                  {
-                        _socket.emit('change-turn', dataaOfRoom['name']);
+                  // if(guessedUserCtr == dataaOfRoom['players'].length-1) //drawer can not guess
+                  // {
+                  //       _socket.emit('change-turn', dataaOfRoom['name']);
                         
-                  }
-
+                  // }
+//removed above block to give more authority to server
 
 });
                 
