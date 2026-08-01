@@ -1,0 +1,68 @@
+Analyzing who_inherited_who...                                  
+
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\models\my_painter.dart:14:1 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\models\my_painter.dart:28:11 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\models\my_painter.dart:31:11 - avoid_print
+   info - The prefix 'IO' isn't a lower_case_with_underscores identifier. Try changing the prefix to follow the lower_case_with_underscores style - lib\paint_screen.dart:5:60 - library_prefixes
+   info - Constructors for public widgets should have a named 'key' parameter. Try adding a named parameter to the constructor - lib\paint_screen.dart:21:9 - use_key_in_widget_constructors
+   info - The variable name 'TextEmptyWidget' isn't a lowerCamelCase identifier. Try changing the name to follow the lowerCamelCase style - lib\paint_screen.dart:35:16 - non_constant_identifier_names
+   info - The private field _scrollController could be 'final'. Try making the field 'final' - lib\paint_screen.dart:36:20 - prefer_final_fields
+   info - The variable name '_ChangingturnRailGuard' isn't a lowerCamelCase identifier. Try changing the name to follow the lowerCamelCase style - lib\paint_screen.dart:44:8 - non_constant_identifier_names
+   info - The private field _inputController could be 'final'. Try making the field 'final' - lib\paint_screen.dart:46:25 - prefer_final_fields
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:57:9 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:144:15 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:147:15 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:182:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:183:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:203:5 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:205:5 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:206:5 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:217:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:225:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:231:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:235:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:239:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:243:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:247:7 - avoid_print
+   info - Use interpolation to compose strings and values. Try using string interpolation to build the composite string - lib\paint_screen.dart:247:13 - prefer_interpolation_to_compose_strings
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:256:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:267:9 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:268:9 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:273:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:274:7 - avoid_print
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss. Try replacing the use of the deprecated member with the replacement - lib\paint_screen.dart:282:41 - deprecated_member_use
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:290:11 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:291:11 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:295:9 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:300:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:304:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:317:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:327:9 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:332:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:333:7 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:336:9 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:337:9 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:338:9 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:341:9 - avoid_print
+   info - Unnecessary braces in a string interpolation. Try removing the braces - lib\paint_screen.dart:341:38 - unnecessary_brace_in_string_interps
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:352:11 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:354:9 - avoid_print
+   info - Don't use 'BuildContext's across async gaps. Try rewriting the code to not use the 'BuildContext', or guard the use with a 'mounted' check - lib\paint_screen.dart:371:26 - use_build_context_synchronously
+   info - The local variable '_width' starts with an underscore. Try renaming the variable to not start with an underscore - lib\paint_screen.dart:398:11 - no_leading_underscores_for_local_identifiers
+   info - The local variable '_height' starts with an underscore. Try renaming the variable to not start with an underscore - lib\paint_screen.dart:399:11 - no_leading_underscores_for_local_identifiers
+   info - The local variable '_width' starts with an underscore. Try renaming the variable to not start with an underscore - lib\paint_screen.dart:461:34 - no_leading_underscores_for_local_identifiers
+   info - The local variable '_height' starts with an underscore. Try renaming the variable to not start with an underscore - lib\paint_screen.dart:461:49 - no_leading_underscores_for_local_identifiers
+   info - The local variable '_width' starts with an underscore. Try renaming the variable to not start with an underscore - lib\paint_screen.dart:566:35 - no_leading_underscores_for_local_identifiers
+   info - The local variable '_height' starts with an underscore. Try renaming the variable to not start with an underscore - lib\paint_screen.dart:566:50 - no_leading_underscores_for_local_identifiers
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:600:15 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:601:15 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:611:15 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:612:15 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:622:15 - avoid_print
+   info - Don't invoke 'print' in production code. Try using a logging framework - lib\paint_screen.dart:623:15 - avoid_print
+   info - An uninitialized field should have an explicit type annotation. Try adding a type annotation - lib\waiting_room_screen.dart:11:9 - prefer_typing_uninitialized_variables
+   info - Missing type annotation. Try adding a type annotation - lib\waiting_room_screen.dart:11:9 - strict_top_level_inference
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check. Guard a 'State.context' use with a 'mounted' check on the State, and other BuildContext use with a 'mounted' check on the BuildContext - lib\waiting_room_screen.dart:34:26 - use_build_context_synchronously
+   info - Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' - lib\widgets\app_top_bar.dart:79:11 - use_null_aware_elements
+
+64 issues found. (ran in 3.4s)

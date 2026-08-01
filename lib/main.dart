@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:who_inherited_who/home_screen.dart';
-import 'package:who_inherited_who/paint_screen.dart';
+import 'package:who_inherited_who/theme/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,16 +9,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Who Inherited Who',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        colorScheme: .fromSeed(seedColor:Colors.blue),
-      ),
+      theme: AppTheme.dark,
       home: const HomeScreen(),
     );
   }

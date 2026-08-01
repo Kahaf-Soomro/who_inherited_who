@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:who_inherited_who/paint_screen.dart';
-import 'package:who_inherited_who/widget/custom_text_field.dart';
-
+import 'package:who_inherited_who/theme/app_colors.dart';
+import 'package:who_inherited_who/theme/app_spacing.dart';
+import 'package:who_inherited_who/theme/app_typography.dart';
+import 'package:who_inherited_who/widgets/app_card.dart';
+import 'package:who_inherited_who/widgets/app_dropdown.dart';
+import 'package:who_inherited_who/widgets/app_text_field.dart';
+import 'package:who_inherited_who/widgets/app_top_bar.dart';
+import 'package:who_inherited_who/widgets/sketch_button.dart';
 
 class CreateRoomScreen extends StatefulWidget {
   const CreateRoomScreen({super.key});
@@ -12,122 +17,133 @@ class CreateRoomScreen extends StatefulWidget {
 }
 
 class _CreateRoomScreenState extends State<CreateRoomScreen> {
-  
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _roomNameController = TextEditingController();
-  late String? _maxRoundsValue;
-  late String? _maxPlayers;
+  String? _maxRoundsValue;
+  String? _maxPlayers;
 
-
-  void  createRoom(){
+  void createRoom() {
     if (_nameController.text.isNotEmpty &&
         _roomNameController.text.isNotEmpty &&
         _maxPlayers != null &&
         _maxRoundsValue != null) {
       Map data = {
-        "nickname":_nameController.text,
-        "name":  _roomNameController.text,
-        "maxRounds":  _maxRoundsValue,
-        "occupancy": _maxPlayers
-
+        "nickname": _nameController.text,
+        "name": _roomNameController.text,
+        "maxRounds": _maxRoundsValue,
+        "occupancy": _maxPlayers,
       };
-      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PaintScreen(data:data, screenFrom:"CreateRoom" )));
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => PaintScreen(data: data, screenFrom: "CreateRoom"),
+        ),
+      );
     } else {
-      
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in all fields to create a room'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 
-
-
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _roomNameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text("Create Room",
-          style: TextStyle(color: Colors.black , fontSize: 30)),
-    SizedBox(height: MediaQuery.of(context).size.height*0.08 ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal:20),
-        child: CustomTextField(controller : _nameController, hintText: "Enter your name ", ),
-        ),
-        SizedBox(height: 20,),
-             Container(
-          margin: const EdgeInsets.symmetric(horizontal:20),
-        child: CustomTextField(controller : _roomNameController, hintText: "Enter room name ", ),
-        ),
-        SizedBox(height: 20,),
-        DropdownButton<String>(
-         
-         focusColor: Colors.black12  ,
-         
-          items: <String>{"2", "3", "5", "10", "15"}
-                .map<DropdownMenuItem<String>>(
-                  (String value) => DropdownMenuItem(
-                    value: value,
-                    child: new Text(
-                      value,
-                      style: const TextStyle(color: Colors.black),
-                    ),
+          const AppTopBar(title: 'Create Room'),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(AppSpacing.xl),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 480),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Start a new game',
+                        style: AppTypography.displaySmall.copyWith(
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.xs),
+                      Text(
+                        'Set up the room and invite your friends to scribble.',
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.xl),
+
+                      // ─── Form card ────────────────────────────────
+                      AppCard(
+                        padding: const EdgeInsets.all(AppSpacing.lg),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            AppTextField(
+                              controller: _nameController,
+                              hintText: 'Your nickname',
+                              leadingIcon: Icons.person_outline,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            const SizedBox(height: AppSpacing.md),
+                            AppTextField(
+                              controller: _roomNameController,
+                              hintText: 'Room name',
+                              leadingIcon: Icons.tag,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            const SizedBox(height: AppSpacing.md),
+                            AppDropdown<String>(
+                              value: _maxRoundsValue,
+                              hintText: 'Select max rounds',
+                              labelText: 'Rounds',
+                              leadingIcon: Icons.repeat,
+                              items: AppDropdownItem.stringItems(
+                                const ["2", "3", "5", "10", "15"],
+                              ),
+                              onChanged: (value) =>
+                                  setState(() => _maxRoundsValue = value),
+                            ),
+                            const SizedBox(height: AppSpacing.md),
+                            AppDropdown<String>(
+                              value: _maxPlayers,
+                              hintText: 'Select room size',
+                              labelText: 'Players',
+                              leadingIcon: Icons.group_outlined,
+                              items: AppDropdownItem.stringItems(
+                                const ["2", "3", "4", "5", "6", "7"],
+                              ),
+                              onChanged: (value) =>
+                                  setState(() => _maxPlayers = value),
+                            ),
+                            const SizedBox(height: AppSpacing.xl),
+                            SketchButton(
+                              label: 'Create Room',
+                              icon: Icons.add,
+                              onPressed: createRoom,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ).toList(),
-                hint: const Text("Select Max rounds" ,style: TextStyle(color: Colors.black, fontSize:14 , fontWeight: FontWeight.w500),) ,
-           onChanged: (String? value) {
-            setState((){
-              _maxRoundsValue = value;
-
-            }
-            );
-          },
-        
-        ),
-        SizedBox(height: 20,),
-
-
-   DropdownButton<String>(
-         
-         focusColor: Colors.black12  ,
-         
-          items: <String>{"2", "3", "4", "5", "6","7",}
-                .map<DropdownMenuItem<String>>(
-                  (String value) => DropdownMenuItem(
-                    value: value,
-                    child: new Text(
-                      value,
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ).toList(),
-                hint: const Text("Select Room Size" ,style: TextStyle(color: Colors.black, fontSize:14 , fontWeight: FontWeight.w500),) ,
-           onChanged: (String? value) {
-            setState((){
-              _maxPlayers = value;
-
-            }
-            );
-          },
-        
-        ),
-        SizedBox(height: 40),
-          ElevatedButton(
-               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.blue),
-                textStyle: WidgetStateProperty.all(TextStyle(color: Colors.white)),
-                minimumSize: WidgetStateProperty.all(Size(MediaQuery.of(context).size.width/2.5, 50)),
-              
+                ),
               ),
-
-            onPressed: createRoom ,
-            child: const Text(
-              "Create",
-              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
         ],
-
       ),
     );
   }
