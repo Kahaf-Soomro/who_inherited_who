@@ -129,7 +129,91 @@ The room creator can configure the game before starting it, including the number
 The repository contains both the Flutter client and Node.js backend.
 
 ```text
-
+who_inherited_who/
+│
+├── .vscode/
+│
+├── android/
+│
+├── ios/
+│
+├── lib/
+│   │
+│   ├── models/
+│   │   ├── my_painter.dart
+│   │   └── touch_points.dart
+│   │
+│   ├── theme/
+│   │   ├── app_colors.dart
+│   │   ├── app_spacing.dart
+│   │   ├── app_theme.dart
+│   │   └── app_typography.dart
+│   │
+│   ├── widget/
+│   │   └── sidebar/
+│   │       └── sidebar.dart
+│   │
+│   ├── widgets/
+│   │   ├── app_badge.dart
+│   │   ├── app_button.dart
+│   │   ├── app_card.dart
+│   │   ├── app_dropdown.dart
+│   │   ├── app_text_field.dart
+│   │   ├── app_top_bar.dart
+│   │   ├── hand_drawn_border.dart
+│   │   ├── loading_state.dart
+│   │   ├── player_avatar.dart
+│   │   ├── room_tile.dart
+│   │   ├── score_tile.dart
+│   │   ├── scribble_divider.dart
+│   │   ├── section_header.dart
+│   │   ├── sketch_button.dart
+│   │   └── sketch_checkmark.dart
+│   │
+│   ├── create_room_screen.dart
+│   ├── home_screen.dart
+│   ├── join_room_screen.dart
+│   ├── main.dart
+│   ├── paint_screen.dart
+│   └── waiting_room_screen.dart
+│
+├── linux/
+│
+├── macos/
+│
+├── server_dummy_folder/
+│   │
+│   ├── api/
+│   │   ├── getWords.js
+│   │   └── getWordsForSWEStudents.js
+│   │
+│   ├── models/
+│   │   ├── Player.js
+│   │   └── Room.js
+│   │
+│   ├── node_modules/
+│   │
+│   ├── index.js
+│   ├── package-lock.json
+│   └── package.json
+│
+├── test/
+│   └── widget_test.dart
+│
+├── web/
+│
+├── windows/
+│
+├── .gitignore
+├── .metadata
+├── README.md
+├── TODO.md
+├── analysis_options.yaml
+├── analyze_output.txt
+├── flutter_01.png
+├── getWordsForSWEStudents.js
+├── pubspec.lock
+└── pubspec.yaml
 ```
 
 # 🚀 Getting Started
