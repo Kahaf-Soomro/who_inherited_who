@@ -46,7 +46,7 @@ The project is demonstrated through a multiplayer gameplay recording showing two
 
 The project uses a Flutter client connected to a Node.js server through Socket.IO, with MongoDB handling persistent data.
 
-```
+
 <img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/5339207e-128c-4203-a07d-bc5d0283cc1e" />
 
 ```
